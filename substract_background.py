@@ -3,7 +3,7 @@ import cv2
 from matplotlib import pyplot as plt
 import os
  
-cap = cv2.VideoCapture('Dataset/video/Yanda_1/huang.mp4')
+cap = cv2.VideoCapture('Dataset/video/sample.mp4')
  
 fgbg = cv2.createBackgroundSubtractorMOG2(varThreshold = 64, detectShadows = False)
 
@@ -27,27 +27,40 @@ while(1):
 
         [h,w] = fgmask.shape
         body_points = []
+        xbody = []
+        ybody = []
 
         for i in range(h):
             for w in range(w):
                 if (fgmask[i,w]>0):
-                    body_points.append([i,w])
+                    xbody.append(i)
+                    ybody.append(w)
+                    # body_points.append([i,w])
 
-        body_points = np.array(body_points)
-        [x_center, y_center] = np.median(body_points, axis=0)
-        print(x_center, y_center)
-        [x_var, y_var] = np.sqrt(np.var(body_points, axis=0))
+        # body_points = np.array(body_points)
+        # [x_center, y_center] = np.median(body_points, axis=0)
+        # print(x_center, y_center)
+        # [x_var, y_var] = np.sqrt(np.var(body_points, axis=0))
 
-        multi = 3
-        left = x_center - multi * x_var
-        right = x_center + multi * x_var
-        top = y_center - multi * y_var
-        bottom = y_center + multi * y_var
+        # multi = 1
+        # left = x_center - multi * x_var
+        # right = x_center + multi * x_var
+        # top = y_center - multi * y_var
+        # bottom = y_center + multi * y_var
 
-        fgmask[left:right, top] = 128
-        fgmask[left:right, bottom] = 128
-        fgmask[left, top:bottom] = 128
-        fgmask[right, top:bottom] = 128
+        thresh = 1
+        if xbody and ybody:
+            xbody = np.array(xbody)
+            ybody = np.array(ybody)
+            left = int(np.percentile(xbody, thresh))
+            right = int(np.percentile(xbody, 100 - thresh))
+            top = int(np.percentile(ybody, thresh))
+            bottom = int(np.percentile(ybody, 100 - thresh))
+
+            fgmask[left:right, top] = 128
+            fgmask[left:right, bottom] = 128
+            fgmask[left, top:bottom] = 128
+            fgmask[right, top:bottom] = 128
 
         # if the lines above doesn't work, use below
         # for x in range(left,right):
