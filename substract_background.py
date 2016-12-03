@@ -33,7 +33,26 @@ while(1):
         print(x_center, y_center)
         [x_var, y_var] = np.sqrt(np.var(body_points, axis=0))
 
-        plt.imshow(fgmask)        
+        multi = 3
+        left = x_center - multi * x_var
+        right = x_center + multi * x_var
+        top = y_center - multi * y_var
+        bottom = y_center + multi * y_var
+
+        fgmask[left:right, top] = 128
+        fgmask[left:right, bottom] = 128
+        fgmask[left, top:bottom] = 128
+        fgmask[right, top:bottom] = 128
+
+        # if the lines above doesn't work, use below
+        # for x in range(left,right):
+        #     fgmask[x,top] = 128
+        #     fgmask[x,bottom] = 128
+        # for y in range(top,bottom):
+        #     fgmask[left,y] = 128
+        #     fgmask[right,y] = 128
+
+        plt.imshow(fgmask)
         #cv2.imwrite('people_mask/frame{}.png'.format(count), fgmask)
         cv2.imshow('frame',fgmask)       
         k = cv2.waitKey(30) & 0xff
