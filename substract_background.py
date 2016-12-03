@@ -1,12 +1,17 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
+import os
  
 cap = cv2.VideoCapture('Dataset/video/Yanda_1/huang.mp4')
  
 fgbg = cv2.createBackgroundSubtractorMOG2(varThreshold = 64, detectShadows = False)
 
 count = 0
+
+mask_directory = 'people_mask/'
+if not os.path.exists(mask_directory):
+    os.makedirs(mask_directory)
 
 while(1):
 
@@ -52,8 +57,8 @@ while(1):
         #     fgmask[left,y] = 128
         #     fgmask[right,y] = 128
 
-        plt.imshow(fgmask)
-        #cv2.imwrite('people_mask/frame{}.png'.format(count), fgmask)
+        plt.imshow(fgmask)        
+        #cv2.imwrite(mask_directory + 'frame{}.png'.format(count), fgmask)
         cv2.imshow('frame',fgmask)       
         k = cv2.waitKey(30) & 0xff
         if k == 27:
