@@ -36,10 +36,10 @@ skin_prob = SkinColorRGBGaussianDetector(model, cluster2label, img)
 ```
 
 example script for the above:
-```skinColor_rgbhs_gmm_data0.m```
+skinColor_rgbhs_gmm_data0.m
 
 ### Matlab pipeline after Python preprocess
-```pipeline_after_py.m```
+pipeline_after_py.m
 
 ### Things to do now
 - ~~Inside Dataset there's `borders.mat`, which is the `[left, right, top, bottom]` array get from `background\_substractor.py`, use this as a constraint to detect arm~~
