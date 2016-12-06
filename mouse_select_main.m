@@ -1,5 +1,10 @@
-function selectedPoints = mouse_select_main(filePath, start, ending, radius)
-    %Example: mouse_select_main('Dataset/sample_frames/', 2, 5, 2);
+function mouse_select_main(target, filePath, start, ending, radius, outName)
+    %Example: mouse_select_main(true, 'Dataset/sample_frames/', 2, 5, 2, 'yanda.mat');
+    if (target)
+        outDir = 'Dataset/True_skin/';
+    else
+        outDir = 'Dataset/False_skin/';
+    end
     totalFileList = cellstr(ls(strcat(filePath, '*.png')));
     selectedFiles = totalFileList(start+1:ending+1);
     selectedPoints = [];
@@ -7,4 +12,5 @@ function selectedPoints = mouse_select_main(filePath, start, ending, radius)
         imageName = selectedFiles{k};
         selectedPoints = cat(1, mouse_select(strcat(filePath, imageName), radius), selectedPoints);
     end
+    save(strcat(outDir, outName), 'selectedPoints');
 end
