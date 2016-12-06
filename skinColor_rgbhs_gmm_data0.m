@@ -8,6 +8,6 @@ if retrain == 1
 end
 
 % detection
-img = imread('Dataset/sample_frames/frame_001.png');
+img = imread('Dataset/sample_frames/frame_099.png');
 skin_prob = SkinColorRGBGaussianDetector(model, cluster2label, img);
 imshow(skin_prob)
