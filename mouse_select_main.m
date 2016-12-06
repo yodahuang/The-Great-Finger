@@ -1,5 +1,5 @@
-function selectedPoints = mouse_select_main(start, ending, radius)
-    filePath = 'Dataset/sample_frames/';
+function selectedPoints = mouse_select_main(filePath, start, ending, radius)
+    %Example: mouse_select_main('Dataset/sample_frames/', 2, 5, 2);
     totalFileList = cellstr(ls(strcat(filePath, '*.png')));
     selectedFiles = totalFileList(start+1:ending+1);
     selectedPoints = [];
