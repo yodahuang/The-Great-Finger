@@ -3,7 +3,7 @@ import cv2
 from matplotlib import pyplot as plt
 import os
 import scipy.io as sio
- 
+
 cap = cv2.VideoCapture('Dataset/video/sample.mp4')
  
 fgbg = cv2.createBackgroundSubtractorMOG2(varThreshold = 64, detectShadows = False)
