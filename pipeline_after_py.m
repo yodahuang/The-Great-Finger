@@ -13,20 +13,20 @@ for i=11:11
     mask = uint8(zeros(size(img)));
     mask(borders(i,1):borders(i,2), borders(i,3):borders(i,4), :) = ones(borders(i,2)-borders(i,1)+1, borders(i,4)-borders(i,3)+1,3);
     img = img .* mask;
-    figure;
-    imshow(img)
+%     figure;
+%     imshow(img);
     img_norm = double(img) ./ repmat(sum(img, 3),1,1,3) * 300;
     bgdiff = abs(background_norm - img_norm);
     bgdiff = sum(bgdiff,3) > 20;
     img = img .* uint8(repmat(bgdiff,1,1,3));
-    figure;
-    imshow(img)
+%     figure;
+%     imshow(img);
     skin_prob = SkinColorRGBGaussianDetector(model, cluster2label, img);
     img = img .* uint8(repmat(skin_prob,1,1,3));
+%     figure;
+%     imshow(img);
     figure;
-    imshow(img)
-    figure;
-    imshow(skin_prob>0.9)
+    imshow(skin_prob>0.9);
     hold on
     [row, column] = find(skin_prob>0.9);
     skin_indexs = cat(2, row, column);
@@ -35,10 +35,27 @@ for i=11:11
     [h,~] = size(skin_indexs);
     
     inline_points = [];
+    ps = [];
     for i = 1:h
-        if (getPointToLineDist(theta, rho, skin_indexs(i,1), skin_indexs(i,2))<8)
+        dist = getPointToLineDist(theta, rho, skin_indexs(i,1), skin_indexs(i,2));
+        if (dist < 7)
             inline_points(end+1,:) = skin_indexs(i,:);
+            if (dist <= 3)
+                ps = [ps; skin_indexs(i,:)];
+            end
         end
     end
+    [sortedX, sortInd] = sort(ps(:,1));
+    Y = ps(:,2);
+    sortedY = Y(sortInd);
+    len = size(sortInd,1);
+    lind = int32(round(0.01 * len));
+    rind = int32(round(0.99 * len));
+    lp = [sortedX(lind), sortedY(lind)];
+    rp = [sortedX(rind), sortedY(rind)];
+    disp(lp);
+    disp(rp);
     scatter(inline_points(:,2), inline_points(:,1));
+    scatter(lp(2), lp(1), 100, 5, 'filled');
+    scatter(rp(2), rp(1), 100, 5, 'filled');
 end
