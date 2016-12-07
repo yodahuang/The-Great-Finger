@@ -24,7 +24,7 @@ background_norm = double(background) ./ repmat(sum(background, 3),1,1,3) * 300;
 nodes = [];
 
 % for each frame
-for i=2:4
+for i=11:12
     img = imread(strcat(frame_folder, framelist(i+2).name));
     mask = uint8(zeros(size(img)));
     mask(borders(i,1):borders(i,2), borders(i,3):borders(i,4), :) = ones(borders(i,2)-borders(i,1)+1, borders(i,4)-borders(i,3)+1,3);
