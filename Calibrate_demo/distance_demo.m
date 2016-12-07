@@ -1,7 +1,8 @@
-fist_lx = [774; 675];
-fist_ly = [444; 486];
-fist_rx = [546; 423];
-fist_ry = [303; 346];
+
+fist_ly = [447; 489];
+fist_lx = [824; 717];
+fist_ry = [270; 345];
+fist_rx = [594; 440];
 
 %We suppose the camera position is fixed, so the screen parameter is known.
 %Don't change it if you use the pic/vedio in dataset
@@ -12,8 +13,8 @@ screen_ry = [4; 15; 703; 705];
 
 % These are points of the fist get from ginput
 load('stereo_params.mat');
-I1 = imread('arm1.png');
-I2 = imread('arm2.png');
+I1 = imread('C:\Users\tianmu\Desktop\442dataset\video\5s\leftframes\frame_011.png');
+I2 = imread('C:\Users\tianmu\Desktop\442dataset\video\5s\rightframes\frame_011.png');
 % Undistort the images
 I1 = undistortImage(I1,stereoParams.CameraParameters1);
 I2 = undistortImage(I2,stereoParams.CameraParameters2);
@@ -25,7 +26,8 @@ if(onScreen == 1)
     point2d = stereoParams.CameraParameters1.IntrinsicMatrix' * PT;
     point2d = point2d./point2d(3);
     hold on
-    plot(point2d(1),point2d(2),'*');
+    plot(point2d(1),point2d(2),'r.');
+    scatter(point2d(1), point2d(2), 1000, 'r'); 
 else
     disp('Pointing point is out of screen');
     imshow(I1);
