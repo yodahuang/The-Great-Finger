@@ -27,16 +27,18 @@ for i=11:11
     imshow(img)
     figure;
     imshow(skin_prob>0.9)
+    hold on
     [row, column] = find(skin_prob>0.9);
     skin_indexs = cat(2, row, column);
     % May need to change the params
-    [theta, rho] = ransac(skin_indexs', 1000, 10, 0.2);
+    [theta, rho] = ransac(skin_indexs', 1000, 8, 0.2);
     [h,~] = size(skin_indexs);
-    points_along_the_line = [1,2];
+    
+    inline_points = [];
     for i = 1:h
-        if(getPointToLineDist(theta, rho, skin_indexs(i,1), skin_indexs(i,2))<10)
-            points_along_the_line(end+1,:)=skin_indexs(i,:);
+        if (getPointToLineDist(theta, rho, skin_indexs(i,1), skin_indexs(i,2))<8)
+            inline_points(end+1,:) = skin_indexs(i,:);
         end
     end
-    points_along_the_line(1)=[];
+    scatter(inline_points(:,2), inline_points(:,1));
 end
