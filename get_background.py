@@ -4,6 +4,7 @@ import cv2
 from matplotlib import pyplot as plt
 import os
 import scipy.io as sio
+from scipy.ndimage.morphology import binary_fill_holes as fillhole
 
 cap = cv2.VideoCapture('Dataset/video/sample.mp4')
 fgbg = cv2.createBackgroundSubtractorMOG2(varThreshold = 64, detectShadows = False)
@@ -29,6 +30,7 @@ while(1):
         fgmask = cv2.medianBlur(fgmask, 3)
         
         binary_mask = fgmask.astype('float')
+        binary_mask = fillhole(binary_mask).astype(float)
         [h,w] = binary_mask.shape
         for i in range(h):
             for j in range(w):
@@ -37,7 +39,6 @@ while(1):
                 else:
                     binary_mask[i,j]=np.nan
         binary_rgb_mask = np.dstack((binary_mask, binary_mask, binary_mask))
-        # Basic smoothing
         applied = binary_rgb_mask*frame
         #plottable = fixPlot(np.nan_to_num(applied).astype('uint8'))
         #plt.figure()
