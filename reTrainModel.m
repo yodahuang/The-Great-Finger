@@ -1,8 +1,9 @@
 data_true = load('Dataset/SkinClassifier/0/yanda.mat');
 data_false = load('Dataset/SkinClassifier/0/yanda_false.mat');
 data_false_extra = load('Dataset/SkinClassifier/0/yanda_false_extra.mat');
+data_false_extra2 = load('Dataset/SkinClassifier/0/yanda_false_extra2.mat');
 
-data = cat(1, data_true.selectedPoints, data_false.selectedPoints, data_false_extra.selectedPoints);
+data = cat(1, data_true.selectedPoints, data_false.selectedPoints, data_false_extra.selectedPoints, data_false_extra2.selectedPoints);
 
 RGB = squeeze(data(:,1,3:5));
 y = data(:,1,6);

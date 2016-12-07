@@ -8,7 +8,7 @@ framelist = dir(frame_folder);
 background_norm = double(background) ./ repmat(sum(background, 3),1,1,3) * 300;
 
 % for each frame
-for i=25:25
+for i=11:11
     img = imread(strcat(frame_folder, framelist(i+2).name));
     mask = uint8(zeros(size(img)));
     mask(borders(i,1):borders(i,2), borders(i,3):borders(i,4), :) = ones(borders(i,2)-borders(i,1)+1, borders(i,4)-borders(i,3)+1,3);
@@ -27,4 +27,16 @@ for i=25:25
     imshow(img)
     figure;
     imshow(skin_prob>0.9)
+    [row, column] = find(skin_prob>0.9);
+    skin_indexs = cat(2, row, column);
+    % May need to change the params
+    [theta, rho] = ransac(skin_indexs', 1000, 10, 0.2);
+    [h,~] = size(skin_indexs);
+    points_along_the_line = [1,2];
+    for i = 1:h
+        if(getPointToLineDist(theta, rho, skin_indexs(i,1), skin_indexs(i,2))<10)
+            points_along_the_line(end+1,:)=skin_indexs(i,:);
+        end
+    end
+    points_along_the_line(1)=[];
 end
