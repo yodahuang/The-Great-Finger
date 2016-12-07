@@ -10,6 +10,7 @@ import cv2
 import sys
 import os
 import scipy.io as sio
+from scipy.ndimage.morphology import binary_fill_holes as fillhole
 
  
 def preprocess(video):
@@ -71,6 +72,7 @@ def preprocess(video):
         # Get the background
         if (not count%10):
             binary_mask = fgmask.astype('float')
+            binary_mask = fillhole(binary_mask).astype(float)
             for i in range(h):
                 for j in range(w):
                     if binary_mask[i,j]==0:
