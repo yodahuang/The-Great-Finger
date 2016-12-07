@@ -2,10 +2,14 @@ fist_lx = [774; 675];
 fist_ly = [444; 486];
 fist_rx = [546; 423];
 fist_ry = [303; 346];
-screen_lx = [780; 1648; 1704; 778];
-screen_ly = [130; 174; 837; 849];
-screen_rx = [609; 1554; 1579; 598];
-screen_ry = [0; 1; 705; 708];
+
+%We suppose the camera position is fixed, so the screen parameter is known.
+%Don't change it if you use the pic/vedio in dataset
+screen_lx = [780; 1645; 1699; 780];
+screen_ly = [154; 208; 835; 850];
+screen_rx = [609; 1549; 1579; 598];
+screen_ry = [4; 15; 703; 705];
+
 % These are points of the fist get from ginput
 load('stereo_params.mat');
 I1 = imread('arm1.png');
