@@ -1,4 +1,13 @@
-function nodes = getArmNodes(Left)
+function getArmNodes
+    lmat = getNodesFromVideo(true);
+    rmat = getNodesFromVideo(false);
+    armnodes = ones(size(lmat,1),2,size(lmat,2));
+    armnodes(:,1,:) = lmat;
+    armnodes(:,2,:) = rmat;
+    save('armnodes.mat','armnodes');
+end
+
+function nodes = getNodesFromVideo(Left)
 if Left == true
     pre = 'left';
 else
@@ -15,7 +24,7 @@ background_norm = double(background) ./ repmat(sum(background, 3),1,1,3) * 300;
 nodes = [];
 
 % for each frame
-for i=11:20
+for i=2:4
     img = imread(strcat(frame_folder, framelist(i+2).name));
     mask = uint8(zeros(size(img)));
     mask(borders(i,1):borders(i,2), borders(i,3):borders(i,4), :) = ones(borders(i,2)-borders(i,1)+1, borders(i,4)-borders(i,3)+1,3);
@@ -68,4 +77,4 @@ for i=11:20
 %     hold off;
 end
 
-
+end
