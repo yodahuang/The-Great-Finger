@@ -1,5 +1,9 @@
 # The **GREAT** Finger
 
+## Disclaimer
+
+This project clearly shows that even if you have some kind of document, it's still possible that you forgot most of the details and is unsable to reproduce the result after a year. Sad.
+
 ### Installation guide
 
 `conda install -c menpo opencv3=3.1.0`
