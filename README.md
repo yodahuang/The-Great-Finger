@@ -2,7 +2,7 @@
 
 ## Disclaimer
 
-This project clearly shows that even if you have some kind of document, it's still possible that you forgot most of the details and is unsable to reproduce the result after a year. Sad.
+This project clearly shows that even if you have some kind of documents, it's still possible that you forget most of the details and is unable to reproduce the result after a year. Sad.
 
 ### Installation guide
 
